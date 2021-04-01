@@ -3,7 +3,10 @@ from .models import Item
 
 
 def index(request):
-    return render(request, 'home-page.html')
+    context = {
+        'items': Item.objects.all(),
+    }
+    return render(request, 'home.html', context)
 
 
 def checkout(request):
