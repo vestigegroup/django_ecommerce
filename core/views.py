@@ -8,16 +8,11 @@ class HomeView(ListView):
     template_name = 'home.html'
 
 
-def index(request):
-    context = {
-        'items': Item.objects.all(),
-    }
-    return render(request, 'home.html', context)
+class ItemDetailView(DetailView):
+    model = Item
+    template_name = 'product.html'
 
 
 def checkout(request):
     return render(request, 'checkout-page.html')
 
-
-def products(request):
-    return render(request, 'product-page.html')
