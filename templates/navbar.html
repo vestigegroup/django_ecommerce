@@ -19,23 +19,17 @@
             <!-- Left -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link waves-effect" href="#">Home
+                    <a class="nav-link waves-effect" href="{% url 'core:index' %}">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">About
-                        MDB</a>
+                    <a class="nav-link waves-effect" href="{% url 'core:checkout' %}" target="_blank">Checkout</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link waves-effect"
-                       href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
-                       target="_blank">Free download</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link waves-effect" href="https://mdbootstrap.com/education/bootstrap/"
-                       target="_blank">Free
-                        tutorials</a>
+                       href="{% url 'core:products' %}"
+                       target="_blank">Products</a>
                 </li>
             </ul>
 
