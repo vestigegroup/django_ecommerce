@@ -7,6 +7,7 @@ from .models import Item, OrderItem, Order
 
 class HomeView(ListView):
     model = Item
+    paginate_by = 10
     template_name = 'home.html'
 
 
