@@ -141,6 +141,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
 
 # Crispy forms
 # https://django-crispy-forms.readthedocs.io/en/latest/
