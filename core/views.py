@@ -6,12 +6,28 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 from .models import Item, OrderItem, Order
+from .forms import CheckoutForm
 
 
 class HomeView(ListView):
     model = Item
     paginate_by = 10
     template_name = 'home.html'
+
+
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        form = CheckoutForm()
+        context = {
+            'form': form
+        }
+        return render(self.request, 'checkout-page.html', context)
+
+    def post(self, *args, **kwargs):
+        form = CheckoutForm(self.request.POST or None)
+        if form.is_valid():
+            print('The form is valid')
+            return redirect('core:checkout')
 
 
 class ItemDetailView(DetailView):
@@ -111,7 +127,3 @@ def remove_single_item_from_cart(request, slug):
     else:
         messages.info(request, 'You don\'t have an active order.')
         return redirect('core:product', slug=slug)
-
-
-def checkout(request):
-    return render(request, 'checkout-page.html')
