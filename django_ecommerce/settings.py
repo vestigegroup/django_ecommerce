@@ -19,7 +19,6 @@ TEMPLATES_DIRS = os.path.join(BASE_DIR, 'templates')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ SECRET_KEY = '5(h3#n$$mpz+3b6pqn9&^+9g1y#7ttm^54m7hff(b6e2+eyg(4'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -81,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_ecommerce.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -91,7 +88,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -111,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -124,7 +119,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -147,3 +141,6 @@ LOGIN_REDIRECT_URL = '/'
 # Crispy forms
 # https://django-crispy-forms.readthedocs.io/en/latest/
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Stripe
+STRIPE_SECRET_KEY = 'sk_test_51IcB34KD6qsl0UAVFjQ4N8ja6qzvZVw6ru5H1tvAlO4EAwgjKSYGWdeitSLXa0CbYZyGyx4omMDGodY7lLsw0fH600zCsCjNPd'
