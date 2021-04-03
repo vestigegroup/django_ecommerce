@@ -23,6 +23,6 @@ class CheckoutForm(forms.Form):
     zip = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control'
     }))
-    same_billing_address = forms.BooleanField(widget=forms.CheckboxInput())
+    same_shipping_address = forms.BooleanField(widget=forms.CheckboxInput())
     save_info = forms.BooleanField(widget=forms.CheckboxInput())
     payment_option = forms.ChoiceField(widget=forms.RadioSelect, choices=PAYMENT_OPTIONS)
