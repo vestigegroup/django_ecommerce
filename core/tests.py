@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from datetime import datetime
+from http import HTTPStatus
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
 from .models import Item, OrderItem, Address, Payment, Coupon, Order, Refund
 
@@ -129,10 +130,60 @@ class TestModels(TestCase):
 
 
 class ViewTests(TestCase):
-    def test_home_view(self):
-        url = reverse('core:home')
+    @classmethod
+    def setUpTestData(cls):
+        Item.objects.create(
+            title='first item',
+            price=123.312,
+            category='S',
+            label='P',
+            slug='first-item',
+            description='first item text'
+        )
+
+    # def test_home_view(self):
+    #     url = reverse('core:home')
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_order_summary_view(self):
+        url = reverse('core:order-summary')
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_add_coupon_view(self):
+        url = reverse('core:add-coupon')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
+
+    def test_request_refund_view(self):
+        url = reverse('core:request-refund')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_product_view(self):
+        item = Item.objects.get(id=1)
+        url = reverse('core:product', kwargs={'slug': item.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_add_to_cart_view(self):
+        item = Item.objects.get(id=1)
+        url = reverse('core:add-to-cart', kwargs={'slug': item.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_remove_from_cart_view(self):
+        item = Item.objects.get(id=1)
+        url = reverse('core:remove-from-cart', kwargs={'slug': item.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_remove_item_from_cart_view(self):
+        item = Item.objects.get(id=1)
+        url = reverse('core:remove-single-item-from-cart', kwargs={'slug': item.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
 
 class FormTests(TestCase):
