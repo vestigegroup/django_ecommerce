@@ -22,13 +22,6 @@ def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 
-def products(request):
-    context = {
-        'items': Item.objects.all()
-    }
-    return render(request, "products.html", context)
-
-
 def is_valid_form(values):
     valid = True
     for field in values:
@@ -213,7 +206,7 @@ class PaymentView(View):
             context = {
                 'order': order,
                 'DISPLAY_COUPON_FORM': False,
-                'STRIPE_PUBLIC_KEY' : settings.STRIPE_PUBLIC_KEY
+                'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
             }
             userprofile = self.request.user.userprofile
             if userprofile.one_click_purchasing:
@@ -306,7 +299,7 @@ class PaymentView(View):
                 messages.warning(self.request, f"{err.get('message')}")
                 return redirect("/")
 
-            except stripe.error.RateLimitError as e:
+            except stripe.error.RateLimitError:
                 # Too many requests made to the API too quickly
                 messages.warning(self.request, "Rate limit error")
                 return redirect("/")
@@ -317,25 +310,25 @@ class PaymentView(View):
                 messages.warning(self.request, "Invalid parameters")
                 return redirect("/")
 
-            except stripe.error.AuthenticationError as e:
+            except stripe.error.AuthenticationError:
                 # Authentication with Stripe's API failed
                 # (maybe you changed API keys recently)
                 messages.warning(self.request, "Not authenticated")
                 return redirect("/")
 
-            except stripe.error.APIConnectionError as e:
+            except stripe.error.APIConnectionError:
                 # Network communication with Stripe failed
                 messages.warning(self.request, "Network error")
                 return redirect("/")
 
-            except stripe.error.StripeError as e:
+            except stripe.error.StripeError:
                 # Display a very generic error to the user, and maybe send
                 # yourself an email
                 messages.warning(
                     self.request, "Something went wrong. You were not charged. Please try again.")
                 return redirect("/")
 
-            except Exception as e:
+            except Exception:
                 # send an email to ourselves
                 messages.warning(
                     self.request, "A serious error occurred. We have been notifed.")

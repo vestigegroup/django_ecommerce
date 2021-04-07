@@ -63,8 +63,7 @@ ROOT_URLCONF = 'django_ecommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,4 +142,4 @@ LOGIN_REDIRECT_URL = '/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Stripe
-STRIPE_SECRET_KEY = 'sk_test_51IcB34KD6qsl0UAVFjQ4N8ja6qzvZVw6ru5H1tvAlO4EAwgjKSYGWdeitSLXa0CbYZyGyx4omMDGodY7lLsw0fH600zCsCjNPd'
+STRIPE_SECRET_KEY = 'sk_test_51IcB34KD6qsl0UAVFjQ4N8ja6qzvZVw6ru5H1tvAlO4EAwgjKSYGWdeitSLXa0CbYZyGyx4omMDGodY7lLsw0fH600zCsCjNPd '
