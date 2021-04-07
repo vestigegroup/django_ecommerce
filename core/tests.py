@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from datetime import datetime
-from .forms import PaymentForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
 from .models import Item, OrderItem, Address, Payment, Coupon, Order, Refund
 
 
@@ -136,12 +136,45 @@ class ViewTests(TestCase):
 
 
 class FormTests(TestCase):
-    def test_valid_form(self):
-        data = {'stripeToken': 'test-token', 'save': True, 'use_default': False}
-        form = PaymentForm(data=data)
+    def test_checkout_form(self):
+        data = {'shipping_address': 'Texas',
+                'shipping_address2': 'New York City',
+                'shipping_country': 'UA',
+                'shipping_zip': 'test-zip',
+                'billing_address': 'Krakov',
+                'billing_address2': 'Oslo',
+                'billing_country': 'US',
+                'billing_zip': 'Billing zip',
+                'same_billing_address': True,
+                'set_default_shipping': False,
+                'use_default_shipping': True,
+                'set_default_billing': False,
+                'use_default_billing': True,
+                'payment_option': 'S'}
+        form = CheckoutForm(data=data)
         self.assertTrue(form.is_valid())
+        data['payment_option'] = 'C'
+        form = CheckoutForm(data=data)
+        self.assertFalse(form.is_valid())
 
-    def test_invalid_form(self):
-        data = {'stripeToken': 12, 'save': True, 'use_default': 'False'}
+    def test_coupon_form(self):
+        data = {'code': 'code'}
+        form = CouponForm(data=data)
+        self.assertTrue(form.is_valid())
+        data['field'] = 'field'
+        del data['code']
+        form = CouponForm(data=data)
+        self.assertFalse(form.is_valid())
+
+    def test_refund_form(self):
+        data = {'ref_code': 'code', 'message': 'text', 'email': 'mezidiaofficial@gmail.com'}
+        form = RefundForm(data=data)
+        self.assertTrue(form.is_valid())
+        data['email'] = 'text'
+        form = RefundForm(data=data)
+        self.assertFalse(form.is_valid())
+
+    def test_payment_form(self):
+        data = {'stripeToken': 'code', 'save': True, 'use_default': False}
         form = PaymentForm(data=data)
         self.assertTrue(form.is_valid())
